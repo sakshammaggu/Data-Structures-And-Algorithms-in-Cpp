@@ -1,0 +1,40 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+int uniquePath(int i, int j, int &m, int &n)
+{
+    vector<int> prev(n);
+
+    for (int i=0; i<m; i++)
+    {
+        vector<int> curr(n);
+        for (int j=0; j<n; j++)
+        {
+            if (i==0 && j==0)
+                curr[j]=1;
+            else
+            {
+                int up=0, left=0;
+                if (i>0)
+                    up=prev[j];
+                if (j>0)
+                    left=curr[j-1];
+                curr[j]=up+left;
+            }
+        }
+
+        prev=curr;
+    }
+
+    return prev[n-1];
+}
+int main()
+{
+    int m, n;
+    cout<<"Enter rows and cols: "<<endl;
+    cin>>m>>n;
+    int ans=uniquePath(m-1, n-1, m, n);
+    cout<<ans;
+}
+// time complexity: O(m*n)
+// space complexity: O(n)
